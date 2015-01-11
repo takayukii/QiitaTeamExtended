@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title v-text="title"></title>
-    <link href="http://www.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="http://www.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="./css/common.css" type="text/css">
   </head>
   <body>
@@ -12,16 +12,16 @@
       <div v-if="verified">
         <div class="commands">
           <div class="btn-wrap">
-            <div class="custom-btn custom-team-btn" v-on="click: distribute(this)">Distribute</div>
+            <div class="custom-btn custom-team-btn" v-on="click: distribute(this)">チームにメールする</div>
           </div>
           <div class="btn-wrap">
-            <div class="custom-btn custom-qiita-btn" v-on="click: post(this)">Post to Qiita</div>
+            <div class="custom-btn custom-qiita-btn" v-on="click: post(this)">Qiitaに投稿する</div>
           </div>
         </div>
         <div class="content" id="content">
-          <div class="title"><h3 v-text="content_title"></h3></div>
+          <div class="title"><h2 v-text="content_title"></h2></div>
           <hr>
-          <div class="body" v-text="content_body"></div>
+          <div class="body" v-html="content_body"></div>
         </div>
       </div>
     </div>

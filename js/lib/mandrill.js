@@ -4,12 +4,12 @@ function Mandrill(apikey){
   this.apikey = apikey;
 }
 Mandrill.prototype = {
-  send : function(from, to, title, message, callback){
+  send : function(from, to, title, body, callback){
 
    var message = {
         "key": this.apikey,
         "message": {
-            "html": message,
+            "html": body,
             "subject": title,
             "from_email": from,
             "to": [{

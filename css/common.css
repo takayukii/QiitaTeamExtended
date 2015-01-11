@@ -20,7 +20,7 @@ img {
 
 .custom-btn {
     padding: 10px 20px;
-    width : 140px;
+    width: 140px;
     text-align: center;
 
     background: rgb(87, 87, 87);
@@ -34,13 +34,17 @@ img {
     border-radius: 3px;
 }
 
+.custom-btn:hover {
+    background: #333333;
+}
+
 /*******************************
  Index
 ********************************/
 
 .ext-container {
     width: 400px;
-    padding : 10px;
+    padding: 10px;
 }
 
 .message {
@@ -73,10 +77,24 @@ img {
     background: #1887d0;
     border: 1px solid #1578b9;
 }
+.custom-team-btn:hover {
+    background: #1369a2;
+}
+.custom-btn:active {
+    border:1px solid #334c66;
+    background-color:#69c;
+    color:#e0ebf5;
+    -webkit-box-shadow:inset 0px 0px 8px #334c66;
+    -moz-box-shadow:inset 0px 0px 2px #3a6da0;
+    box-shadow:inset 0px 0px 2px #3a6da0;
+}
 
 .custom-qiita-btn {
     background: #59bb0c;
     border: 1px solid #4ea30a;
+}
+.custom-qiita-btn:hover {
+    background: #428b09;
 }
 
 .content {
@@ -95,13 +113,17 @@ img {
 ********************************/
 
 .opt-container {
-    padding : 10px;
+    padding: 10px;
 }
 
-.save_command {
+.save-command {
     display: table;
 }
 
-.save_btn {
-    float : left;
+.save-btn {
+    float: left;
+}
+
+.save-message {
+    float: left;
 }

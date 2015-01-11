@@ -11,7 +11,10 @@ Qiita.prototype = {
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4) {
         var res = JSON.parse(xhr.responseText);
-        callback(null, res.rendered_body);
+        callback(null, {
+          "title": res.title,
+          "body": res.rendered_body
+        });
       }else{
         callback(xhr, null);
       }

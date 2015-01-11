@@ -11,27 +11,40 @@
       <legend v-text="title"></legend>
       <form class="form-controls">
         <div class="control-group">
-          <label for="token" class="control-label">Token</label>
+          <label for="token" class="control-label">Qiita Team Host</label>
           <div class="controls">
-            <input name="token" type="text" v-model="token" placeholder="[0-9a-f]{20}">
+            <input name="host" type="text" v-model="host" placeholder="ex. xxx.qiita.com">
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="token" class="control-label">Qiita API Token</label>
+          <div class="controls">
+            <input name="token" type="text" v-model="token" placeholder="ex. [0-9a-f]{40}">
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="token" class="control-label">Mandrill API Key</label>
+          <div class="controls">
+            <input name="apikey" type="text" v-model="apikey" placeholder="ex. [0-9A-Za-z]{22}">
           </div>
         </div>
         <div class="control-group">
           <label class="control-label">Your Email</label>
           <div class="controls">
-            <input name="your_email" type="text" v-model="your_email" placeholder="takayuki_imanishi@relationsgroup.co.jp">
+            <input name="your_email" type="text" v-model="your_email" placeholder="ex. me@example.com">
           </div>
         </div>
         <div class="control-group">
           <label class="control-label">Team Email</label>
           <div class="controls">
-            <input name="team_email" type="text" v-model="team_email" placeholder="all@relationsgroup.co.jp">
+            <input name="team_email" type="text" v-model="team_email" placeholder="ex. all@example.com">
           </div>
         </div>
         <hr>
         <div class="control-group">
           <div class="save-command">
-            <div type="submit" class="custom-btn" v-on="click: save(this)">Save</div><p v-text="message"></p>
+            <div class="custom-btn save-btn" v-on="click: save(this)">Save</div>
+            <div class="save-massage" v-text="message"></div>
           </div>
         </div>
       </form>
