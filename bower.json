@@ -1,0 +1,22 @@
+{
+  "name": "QiitaTeamEx",
+  "version": "0.0.0",
+  "authors": [
+    "takayukii <takayuki_imanishi@relationsgroup.co.jp>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vue": "~0.11.4",
+    "lodash": "~2.4.1"
+  }
+}

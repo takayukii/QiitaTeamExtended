@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html id="qiita-team-extended-options">
+  <head>
+    <meta charset="utf-8">
+    <title v-text="title"></title>
+    <link href="http://www.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/common.css" type="text/css">
+  </head>
+  <body>
+    <div class="opt-container">
+      <legend v-text="title"></legend>
+      <form class="form-controls">
+        <div class="control-group">
+          <label for="token" class="control-label">Token</label>
+          <div class="controls">
+            <input name="token" type="text" v-model="token" placeholder="[0-9a-f]{20}">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Your Email</label>
+          <div class="controls">
+            <input name="your_email" type="text" v-model="your_email" placeholder="takayuki_imanishi@relationsgroup.co.jp">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Team Email</label>
+          <div class="controls">
+            <input name="team_email" type="text" v-model="team_email" placeholder="all@relationsgroup.co.jp">
+          </div>
+        </div>
+        <hr>
+        <div class="control-group">
+          <div class="save-command">
+            <div type="submit" class="custom-btn" v-on="click: save(this)">Save</div><p v-text="message"></p>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script src="./js/options_bundle.js"></script>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+/*******************************
+ Common
+********************************/
+
+body {
+    margin: 0px;
+    background-color: #f2f5f7;
+    min-width: 357px;
+    overflow-x: hidden;
+    font-family: "Helvetica Neue",Helvetica,"Hiragino Kaku Gothic Pro","Lucida Grande",Verdana,Arial,Meiryo,"メイリオ",sans-serif;
+}
+
+img {
+    margin: 5px;
+    border: 2px solid black;
+    vertical-align: middle;
+    width: 75px;
+    height: 75px;
+}
+
+.custom-btn {
+    padding: 10px 20px;
+    width : 140px;
+    text-align: center;
+
+    background: rgb(87, 87, 87);
+    border: 1px solid rgb(87, 87, 87);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+/*******************************
+ Index
+********************************/
+
+.ext-container {
+    width: 400px;
+    padding : 10px;
+}
+
+.message {
+    margin-top: 5px;
+    padding: 5px;
+    text-align: center;
+    background: #e0e0e0;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.commands {
+    padding : 10px;
+    text-align: center;
+
+    display: table;
+}
+
+.btn-wrap {
+    float: left;
+    padding: 5px;
+    width: 180px;
+
+    text-align: center;
+}
+
+.custom-team-btn {
+    background: #1887d0;
+    border: 1px solid #1578b9;
+}
+
+.custom-qiita-btn {
+    background: #59bb0c;
+    border: 1px solid #4ea30a;
+}
+
+.content {
+    padding : 10px;
+
+    background: #ffffff;
+    border:solid 1px #cccccc;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+/*******************************
+ Options
+********************************/
+
+.opt-container {
+    padding : 10px;
+}
+
+.save_command {
+    display: table;
+}
+
+.save_btn {
+    float : left;
+}

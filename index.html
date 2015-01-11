@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html id="qiita-team-extended-index">
+  <head>
+    <meta charset="utf-8">
+    <title v-text="title"></title>
+    <link href="http://www.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/common.css" type="text/css">
+  </head>
+  <body>
+    <div class="ext-container">
+      <div class="message" v-text="message"></div>
+      <div v-if="verified">
+        <div class="commands">
+          <div class="btn-wrap">
+            <div class="custom-btn custom-team-btn" v-on="click: distribute(this)">Distribute</div>
+          </div>
+          <div class="btn-wrap">
+            <div class="custom-btn custom-qiita-btn" v-on="click: post(this)">Post to Qiita</div>
+          </div>
+        </div>
+        <div class="content" id="content">
+          <div class="title"><h3 v-text="content_title"></h3></div>
+          <hr>
+          <div class="body" v-text="content_body"></div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/index_bundle.js"></script>
+  </body>
+</html>
