@@ -14,7 +14,7 @@ Qiita:Teamで書いた投稿を任意のエイリアスにメールしたり、�
 
 Chrome拡張をインストールするとこのChrome拡張のアイコンがChromeの右上に表示されます。設定を行った後に下記のように、メール共有とQiita投稿が行えるようになります。
 
-![image](https://qiita-image-store.s3.amazonaws.com/939/39813/fddfab98-ab7b-3791-cb66-9f73e66ca15e.png)
+![image](https://qiita-image-store.s3.amazonaws.com/939/39813/3b719c37-440b-63a7-e54d-a6e568057e18.png)
 
 #### インストール
 
