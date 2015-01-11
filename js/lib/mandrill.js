@@ -26,9 +26,11 @@ Mandrill.prototype = {
     xhr.open("POST", 'https://mandrillapp.com/api/1.0/messages/send.json', true);
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4) {
-        callback(null, xhr.responseText);
-      }else{
-        callback(xhr.responseText, null);
+        if(200 <= xhr.status && xhr.status < 300){
+          callback(null, xhr.responseText);
+        }else{
+          callback(xhr.responseText, null);
+        }
       }
     };
     xhr.send(JSON.stringify(message));

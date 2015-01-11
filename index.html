@@ -15,13 +15,16 @@
             <div class="custom-btn custom-team-btn" v-on="click: distribute(this)">チームにメールする</div>
           </div>
           <div class="btn-wrap">
-            <div class="custom-btn custom-qiita-btn" v-on="click: post(this)">Qiitaに投稿する</div>
+            <div class="custom-btn custom-qiita-btn" v-on="click: tags(this)">Qiitaに投稿する</div>
           </div>
+        </div>
+        <div class="tags" v-if="posting">
+          <input class="tags-input" type="text" v-model="qiita_tags"><button class="custom-btn tags-btn" v-on="click: post(this)">送信</button>
         </div>
         <div class="content" id="content">
           <div class="title"><h2 v-text="content_title"></h2></div>
           <hr>
-          <div class="body" v-html="content_body"></div>
+          <div class="body" v-html="content_body_html"></div>
         </div>
       </div>
     </div>

@@ -7993,21 +7993,21 @@ chrome.tabs.getSelected(null, function(tab) {
           message: "",
           verified: false,
           content_title: "",
-          content_body: "",
+          content_body_html: "",
+          content_body_md: "",
           tab_title: tab.title,
-          tab_url: tab.url
+          tab_url: tab.url,
+          posting: false,
+          qiita_tags: ""
       },
       created: function() {
-        console.log("createdxx");
         var self = this;
 
         self.message = "情報が未設定のため「オプション」から設定してください";
         self.verified = false;
 
         var host = localStorage["host"];
-        console.log("host: " + host);
         var token = localStorage["token"];
-        console.log("token: " + token);
 
         if(!host || !token){
           return;
@@ -8028,10 +8028,12 @@ chrome.tabs.getSelected(null, function(tab) {
 
               if(err){
                 self.message = "エラーが発生しました";
+                return;
               }
               self.message = "投稿内容を取得しました";
               self.content_title = res.title;
-              self.content_body = res.body;
+              self.content_body_html = res.body_html;
+              self.content_body_md = res.body_md;
 
               self.verified = true;
 
@@ -8045,36 +8047,62 @@ chrome.tabs.getSelected(null, function(tab) {
         retrieveQiitaContent(host, token, self.tab_url);
       },
       methods: {
-          distribute: function () {
-            var self = this;
-            self.message = "メール送信します";
+        distribute: function () {
+          var self = this;
+          self.message = "メール送信します";
 
-            var apikey = localStorage["apikey"];
-            console.log("apikey: " + apikey);
-            var your_email = localStorage["your_email"];
-            console.log("your_email: " + your_email);
-            var team_email = localStorage["team_email"];
-            console.log("team_email: " + team_email);
+          var apikey = localStorage["apikey"];
+          var your_email = localStorage["your_email"];
+          var team_email = localStorage["team_email"];
 
-            if(!apikey || !your_email || !team_email){
-              self.message = "！情報が未設定のため「オプション」から設定してください";
+          if(!apikey || !your_email || !team_email){
+            self.message = "情報が未設定のため「オプション」から設定してください";
+            return;
+          }
+
+          var mandrill = new Mandrill(apikey);
+          var body = 'Qiita Team上の投稿へのリンクは <a href="' + self.tab_url + '">' + self.content_title + '</a> です。<br/>' + self.content_body_html;
+
+          mandrill.send(your_email, team_email, self.content_title, body, function(err, response){
+            if(err){
+              self.message = "メール送信に失敗しました";
+            }else{
+              self.message = "メール送信しました";
+            }
+          });
+        },
+        post: function () {
+          var self = this;
+          self.message = "Qiitaに投稿します";
+          var tags = self.qiita_tags.replace(/\s+/g, "").split(',');
+          var host = localStorage["host"];
+          var token = localStorage["token"];
+
+          if(!host || !token){
+            self.message = "情報が未設定のため「オプション」から設定してください";
+            return;
+          }
+          if(tags.length < 1){
+            self.message = "タグは必ず1つ以上必要です";
+            return;
+          }
+          var qiita = new Qiita(host, token);
+          qiita.postItem(self.content_title, self.content_body_md, tags, function(err, res){
+
+            if(err){
+              self.message = "エラーが発生しました";
               return;
             }
+            self.message = "Qiitaに投稿しました";
+            self.posting = false;
 
-            var mandrill = new Mandrill(apikey);
-            var body = 'Qiita Team上の投稿へのリンクは <a href="' + self.tab_url + '">' + self.content_title + '</a> です。<br/>' + self.content_body;
+          });
 
-            mandrill.send(your_email, team_email, self.content_title, body, function(err, response){
-              if(err){
-                self.message = "メール送信に失敗しました";
-              }else{
-                self.message = "メール送信しました";
-              }
-            });
-          },
-          post: function () {
-              this.message = "post";
-          }
+        },
+        tags: function () {
+          this.message = "Qiitaに投稿するには最低1つのタグが必要です（複数カンマ区切り）";
+          this.posting = true;
+        }
       }
   });
 
@@ -8109,9 +8137,11 @@ Mandrill.prototype = {
     xhr.open("POST", 'https://mandrillapp.com/api/1.0/messages/send.json', true);
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4) {
-        callback(null, xhr.responseText);
-      }else{
-        callback(xhr.responseText, null);
+        if(200 <= xhr.status && xhr.status < 300){
+          callback(null, xhr.responseText);
+        }else{
+          callback(xhr.responseText, null);
+        }
       }
     };
     xhr.send(JSON.stringify(message));
@@ -8126,22 +8156,57 @@ function Qiita(host, token){
   this.token = token;
 }
 Qiita.prototype = {
-  getItemHtml : function(id, callback){
+  getItemHtml: function(id, callback){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", 'https://' + this.host + '/api/v2/items/' + id, true);
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4) {
-        var res = JSON.parse(xhr.responseText);
-        callback(null, {
-          "title": res.title,
-          "body": res.rendered_body
-        });
-      }else{
-        callback(xhr, null);
+        if(200 <= xhr.status && xhr.status < 300){
+          var res = JSON.parse(xhr.responseText);
+          callback(null, {
+            "title": res.title,
+            "body_html": res.rendered_body,
+            "body_md": res.body,
+          });
+        }else{
+          callback(xhr.responseText, null);
+        }
       }
     };
     xhr.setRequestHeader('Authorization', 'Bearer ' + this.token);
     xhr.send();
+  },
+  postItem: function(title, body, tags, callback){
+
+    var _tags = [];
+    for(var i = 0; i < tags.length; i ++){
+      _tags.push({'name': tags[i]});
+    }
+
+    var message = {
+        "body": body,
+        "coediting": false,
+        "gist": false,
+        "private": false,
+        "tags": _tags,
+        "title": title,
+        "tweet": false
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", 'https://qiita.com/api/v2/items', true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        if(200 <= xhr.status && xhr.status < 300){
+          callback(null, xhr.responseText);
+        }else{
+          callback(xhr.responseText, null);
+        }
+      }
+    };
+    xhr.setRequestHeader('Authorization', 'Bearer ' + this.token);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(message));
 
   }
 };
