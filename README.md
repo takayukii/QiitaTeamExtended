@@ -19,7 +19,7 @@ Chrome拡張をインストールするとこのChrome拡張のアイコンがCh
 #### インストール
 
 下記からインストールします。
-https://chrome.google.com/webstore/detail/oommfohdakaaifcnmddhlcdpjfpibigb/publish-delayed?authuser=1
+https://chrome.google.com/webstore/detail/qiita-team-extended/oommfohdakaaifcnmddhlcdpjfpibigb?authuser=1
 
 #### 設定
 
