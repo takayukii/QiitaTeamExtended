@@ -3,6 +3,7 @@ chrome.tabs.getSelected(null, function(tab) {
   console.log("getSelected", tab.title, tab.url);
 
   var Vue = require('vue');
+  var $ = require('jquery');
   var Qiita = require('./lib/qiita');
   var Mandrill = require('./lib/mandrill');
 
@@ -50,9 +51,27 @@ chrome.tabs.getSelected(null, function(tab) {
                 self.message = "エラーが発生しました";
                 return;
               }
+
+              var $body = $('<div style="padding: 2px;">' + res.body_html + '</div>');
+              var $tables = $body.find('table');
+              $.each($tables, function(idx, table){
+                var $table = $(table);
+                $table.attr('style', 'border: 1px solid silver; border-collapse: collapse; padding: 1px;');
+              });
+              var $tds = $body.find('td');
+              $.each($tds, function(idx, td){
+                var $td = $(td);
+                $td.attr('style', 'border: 1px solid silver; border-collapse: collapse; padding: 1px;');
+              });
+              var $ths = $body.find('th');
+              $.each($ths, function(idx, th){
+                var $th = $(th);
+                $th.attr('style', 'border: 1px solid silver; border-collapse: collapse; padding: 1px;');
+              });
+
               self.message = "投稿内容を取得しました";
               self.content_title = res.title;
-              self.content_body_html = res.body_html;
+              self.content_body_html = $body.html();//res.body_html;
               self.content_body_md = res.body_md;
 
               self.verified = true;
@@ -80,9 +99,9 @@ chrome.tabs.getSelected(null, function(tab) {
             return;
           }
 
-          var mandrill = new Mandrill(apikey);
           var body = 'Qiita Team上の投稿へのリンクは <a href="' + self.tab_url + '">' + self.content_title + '</a> です。<br/>' + self.content_body_html;
 
+          var mandrill = new Mandrill(apikey);
           mandrill.send(your_email, team_email, self.content_title, body, function(err, response){
             if(err){
               self.message = "メール送信に失敗しました";
